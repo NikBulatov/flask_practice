@@ -10,4 +10,5 @@ def index() -> Response:
 
 @app.route('/<string:city>')
 def index_city(city: str) -> Response:
+    name = request.args.get('name', None)  # get value of query param
     return Response(f'Hello, {city}!')
