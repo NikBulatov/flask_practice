@@ -1,5 +1,4 @@
-from time import time
-
+from time import time_ns as time
 from flask import Flask, Response, g
 
 app = Flask(__name__)
@@ -7,12 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index() -> Response:
-    return Response('Hello World!')
-
-
-@app.route('/<string:city>')
-def index_city(city: str) -> Response:
-    return Response(f'Hello, {city}!')
+    return Response("Hello! In the future something amazing will appear here!")
 
 
 @app.before_request
@@ -27,7 +21,7 @@ def process_after_request(response: Response) -> Response:
     return response
 
 
-@app.errorhandler(404)  # or pass Exception class
-def fatal_404(error) -> Response:
+@app.errorhandler(Exception)
+def unknown_url(error) -> Response:
     app.logger.error(error)
-    return Response('Bad request', 404)
+    return Response('There is no anything on this site', 404)
