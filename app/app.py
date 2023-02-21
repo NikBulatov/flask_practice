@@ -1,9 +1,13 @@
-from flask import Flask, Response
+from flask import Flask, Response, request
 
-app = Flask(__name__)  # pass file name
+app = Flask(__name__)
 
 
-@app.route('/')  # register route to run view
-def index():  # view
-    # return 'Hello World!', 200  # the same way
-    return Response('Hello World!', 200)  # data, response status code
+@app.route('/')
+def index() -> Response:
+    return Response('Hello World!')
+
+
+@app.route('/<string:city>')
+def index_city(city: str) -> Response:
+    return Response(f'Hello, {city}!')
