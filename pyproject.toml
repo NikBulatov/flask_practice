@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "flaskproject"
+version = "0.1.0"
+description = "Coursework for Flask framework"
+authors = ["Nikita Bulatov <nikita_bulatov@icloud.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^2.2.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
