@@ -16,7 +16,7 @@ def index_city(city: str) -> Response:
 
 
 @app.before_request
-def process_before_request():
+def process_before_request() -> None:
     g.start_time = time()
 
 
@@ -25,3 +25,9 @@ def process_after_request(response: Response) -> Response:
     if hasattr(g, 'start_time'):
         response.headers['process-time'] = time() - g.start_time
     return response
+
+
+@app.errorhandler(404)  # or pass Exception class
+def fatal_404(error) -> Response:
+    app.logger.error(error)
+    return Response('Bad request', 404)
