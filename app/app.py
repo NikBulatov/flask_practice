@@ -1,27 +1,15 @@
-from time import time_ns as time
-from flask import Flask, Response, g
-
-app = Flask(__name__)
-
-
-@app.route('/')
-def index() -> Response:
-    return Response("Hello! In the future something amazing will appear here!")
+from flask import Flask
+from app.object.views import object_item
+from app.pages.views import page
 
 
-@app.before_request
-def process_before_request() -> None:
-    g.start_time = time()
+# enter point
+def create_app() -> Flask:
+    app = Flask(__name__)
+    register_blueprints(app)
+    return app
 
 
-@app.after_request
-def process_after_request(response: Response) -> Response:
-    if hasattr(g, 'start_time'):
-        response.headers['process-time'] = time() - g.start_time
-    return response
-
-
-@app.errorhandler(Exception)
-def unknown_url(error) -> Response:
-    app.logger.error(error)
-    return Response('There is no anything on this site', 404)
+def register_blueprints(app: Flask) -> None:
+    app.register_blueprint(object_item)
+    app.register_blueprint(page)
