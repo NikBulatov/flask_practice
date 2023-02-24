@@ -1,17 +1,16 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{ super() }}
-    Pages List
+    Articles
 {% endblock %}
 {% block body %}
     <div class="row">
         <div class="col">
-            <h1>Pages:</h1>
-            {% for page in pages %}
+            <h1>Articles:</h1>
+            {% for article_id in articles.keys() %}
                 <ul>
                     <li>
-                        <a href="#">{{ page }}</a>
+                        <a href="{{ url_for('articles.get_item', pk=article_id) }}">{{ articles[article_id].title }}</a>
                     </li>
                 </ul>
             {% endfor %}

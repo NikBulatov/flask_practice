@@ -1,6 +1,6 @@
 from flask import Flask
-from app.objects.views import object_item
-from app.pages.views import page
+from app.articles.views import articles
+from app.followers.views import followers
 
 
 def create_app() -> Flask:
@@ -10,5 +10,5 @@ def create_app() -> Flask:
 
 
 def register_blueprints(app: Flask) -> None:
-    app.register_blueprint(object_item)
-    app.register_blueprint(page)
+    app.register_blueprint(articles)
+    app.register_blueprint(followers)

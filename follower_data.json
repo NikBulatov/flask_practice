@@ -1,0 +1,23 @@
+{
+  "1": {
+    "name": "Sam Smith",
+    "languages": [
+      "ENG",
+      "CHI"
+    ]
+  },
+  "2": {
+    "name": "Alek Portik",
+    "languages": [
+      "RUS",
+      "JRB"
+    ]
+  },
+  "3": {
+    "name": "Алёна Быкова",
+    "languages": [
+      "RUS",
+      "ENG"
+    ]
+  }
+}
