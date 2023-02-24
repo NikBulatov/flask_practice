@@ -2,16 +2,16 @@
 
 {% block title %}
     {{ super() }}
-    Objects List
+    Pages List
 {% endblock %}
 {% block body %}
     <div class="row">
         <div class="col">
-            <h1>Objects:</h1>
-            {% for object_id in objects.keys() %}
+            <h1>Pages:</h1>
+            {% for page in pages %}
                 <ul>
                     <li>
-                        <a href="{{ url_for('objects.get_object_item', pk=object_id) }}">{{ objects[object_id] }}</a>
+                        <a href="#">{{ page }}</a>
                     </li>
                 </ul>
             {% endfor %}

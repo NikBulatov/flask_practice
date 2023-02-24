@@ -1,16 +1,11 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 
-page = Blueprint(name="page",
+page = Blueprint(name="pages",
                  import_name=__name__,
-                 url_prefix="/page",
+                 url_prefix="/pages",
                  static_folder="../../static")
 
 
 @page.route("/")
-def object_list():
-    return "Hello, Page!"
-
-
-@page.route("/<pk>")
-def get_object_item(pk: int):
-    return pk
+def pages_list():
+    return render_template("pages/list.html", pages=range(5))

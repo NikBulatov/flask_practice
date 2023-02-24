@@ -10,7 +10,7 @@ OBJECTS = {1: "Apple", 2: "Phone", 3: "Book"}
 
 
 @object_item.route("/")
-def object_list():
+def objects_list():
     return render_template("objects/list.html", objects=OBJECTS)
 
 
