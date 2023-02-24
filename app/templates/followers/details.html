@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Follower {{ follower }}
+{% endblock %}
+{% block body %}
+    <h1>Follower name: "{{ follower.name }}"</h1>
+    <h3>Can speak on:</h3>
+    <ul>
+        {% for lang in follower.languages %}
+            <li><strong>{{ lang }}</strong></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
