@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ super() }}
+    Objects List
+{% endblock %}
+{% block body %}
+    {% for object in objects %}
+        <ul>
+            <li>{{ object }}</li>
+        </ul>
+    {% endfor %}
+{% endblock %}
+

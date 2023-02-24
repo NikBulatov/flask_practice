@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %} {# language construction #}
+            My App -
+        {% endblock %}
+        {# {{  }} variable construstion #}
+    </title>
+    {% block css %}{% endblock %}
+</head>
+<body>
+{% block body %}
+{% endblock %}
+</body>
+{% block js %}{% endblock %}
+
+</html>
