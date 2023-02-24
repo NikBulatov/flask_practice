@@ -20,5 +20,4 @@ def get_object_item(pk: int):
         object_inst = OBJECTS[pk]
     except KeyError:
         raise NotFound(f"Object ID {pk} not found")
-        # or redirect("/objects/")
     return render_template("objects/details.html", object_inst=object_inst)

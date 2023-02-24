@@ -5,9 +5,12 @@
     Objects List
 {% endblock %}
 {% block body %}
+    <h1>Objects List</h1>
     {% for object_id in objects.keys() %}
         <ul>
-            <li><a href="{{ url_for('objects.get_object_item', pk=object_id) }}">{{ objects[object_id] }}</a></li>
+            <li>
+                <a href="{{ url_for('objects.get_object_item', pk=object_id) }}">{{ objects[object_id] }}</a>
+            </li>
         </ul>
     {% endfor %}
 {% endblock %}
