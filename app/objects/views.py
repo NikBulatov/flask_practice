@@ -3,8 +3,7 @@ from werkzeug.exceptions import NotFound
 
 object_item = Blueprint(name="objects",
                         import_name=__name__,
-                        url_prefix="/objects",
-                        static_folder="../../static")
+                        url_prefix="/objects")
 
 OBJECTS = {1: "Apple", 2: "Phone", 3: "Book"}
 

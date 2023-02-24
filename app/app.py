@@ -3,9 +3,8 @@ from app.objects.views import object_item
 from app.pages.views import page
 
 
-# enter point
 def create_app() -> Flask:
-    app = Flask(__name__, template_folder="../templates")
+    app = Flask(__name__)
     register_blueprints(app)
     return app
 
