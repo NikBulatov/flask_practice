@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}
+    Login
+{% endblock %}
+{% block body %}
+    <h1>Login as:</h1>
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+    <form method="post" action="{{ url_for('auth.login') }}">
+        <div class="mb-3">
+            <label for="inputEmail1" class="form-label">Username</label>
+            <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="inputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="inputPassword1">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Login</button>
+        </div>
+    </form>
+{% endblock %}
+

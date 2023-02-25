@@ -1,6 +1,7 @@
 from flask import Flask
 from app.articles.views import articles
 from app.authors.views import authors
+from app.auth.views import auth
 from app.db import db
 from config import Config
 
@@ -16,3 +17,4 @@ def create_app() -> Flask:
 def register_blueprints(app: Flask) -> None:
     app.register_blueprint(articles)
     app.register_blueprint(authors)
+    app.register_blueprint(auth)

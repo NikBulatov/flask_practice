@@ -15,8 +15,8 @@ def get_list():
 
 
 @authors.route("/<int:pk>")
-def get_item(pk: int):
+def profile(pk: int):
     author = Author.query.filter_by(id=pk).one_or_none()
     if not author:
-        NotFound(f"Author with ID={pk} not found")
-    return render_template("authors/details.html", author=authors)
+        raise NotFound(f"Author with ID={pk} not found")
+    return render_template("authors/profile.html", author=authors)
