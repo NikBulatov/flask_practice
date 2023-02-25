@@ -1,5 +1,6 @@
 from flask import Flask
 from app.articles.views import articles
+from app.auth.auth import login_manager
 from app.authors.views import authors
 from app.auth.views import auth
 from app.db import db
@@ -10,6 +11,7 @@ def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object(Config)
     db.init_app(app)
+    login_manager.init_app(app)
     register_blueprints(app)
     return app
 
