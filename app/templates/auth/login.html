@@ -11,16 +11,14 @@
     {% endif %}
     <form method="post" action="{{ url_for('auth.login') }}">
         <div class="mb-3">
-            <label for="inputEmail1" class="form-label">Username</label>
-            <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" id="username">
         </div>
         <div class="mb-3">
-            <label for="inputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword1">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="password">
         </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-3">Login</button>
-        </div>
+        <button type="submit" class="btn btn-primary mb-3">Login</button>
     </form>
 {% endblock %}
 

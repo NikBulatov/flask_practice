@@ -1,7 +1,12 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, Blueprint
 from flask_login import login_user, login_required, logout_user
-from app.auth.auth import auth
 from app.models import Author
+
+__all__ = ['auth']
+
+auth = Blueprint(name="auth",
+                 import_name=__name__,
+                 url_prefix="/auth")
 
 
 @auth.route("/login", methods=["POST", "GET"], endpoint="login")
@@ -20,7 +25,7 @@ def login():
 
     login_user(user)
 
-    return redirect(url_for("authors.profile"))
+    return redirect(url_for("authors.profile", pk=user.id))
 
 
 @auth.route("/logout/", endpoint="logout")

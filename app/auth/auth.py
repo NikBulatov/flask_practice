@@ -2,16 +2,10 @@ from flask import redirect, url_for, Blueprint
 from app.models import Author
 from flask_login import LoginManager
 
-__all__ = [
-    "login_manager",
-    "auth",
-]
+__all__ = ["login_manager"]
+
 login_manager = LoginManager()
 login_manager.login_view = "auth.login"
-
-auth = Blueprint(name="auth",
-                 import_name=__name__,
-                 url_prefix="/auth")
 
 
 @login_manager.user_loader
