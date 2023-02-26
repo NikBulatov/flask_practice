@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from flask_login import login_required
 from werkzeug.exceptions import NotFound
 
 from app.models import Author
@@ -15,8 +16,9 @@ def get_list():
 
 
 @authors.route("/<int:pk>")
+@login_required
 def profile(pk: int):
     author = Author.query.filter_by(id=pk).one_or_none()
     if not author:
         raise NotFound(f"Author with ID={pk} not found")
-    return render_template("authors/profile.html", author=authors)
+    return render_template("authors/profile.html", author=author)

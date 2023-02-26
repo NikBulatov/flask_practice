@@ -5,11 +5,5 @@
 {% endblock %}
 {% block body %}
     <h1>Author name: "{{ author.username }}"</h1>
-    <h3>Can speak on:</h3>
-    <ul>
-        {% for lang in author.languages %}
-            <li><strong>{{ lang }}</strong></li>
-        {% endfor %}
-    </ul>
 {% endblock %}
 
