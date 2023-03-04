@@ -10,8 +10,7 @@ from config import Config
 def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object(Config)
-    db.init_app(app)
-    login_manager.init_app(app)
+    register_extensions(app)
     register_blueprints(app)
     return app
 
@@ -20,3 +19,8 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(articles)
     app.register_blueprint(authors)
     app.register_blueprint(auth)
+
+
+def register_extensions(app: Flask) -> None:
+    db.init_app(app)
+    login_manager.init_app(app)

@@ -1,8 +1,11 @@
+from flask_migrate import Migrate
+
 from app.app import create_app
 from app.db import db
 from app.models import Author
 
 app = create_app()
+migrate = Migrate(app, db, compare_type=True)
 
 
 @app.cli.command("init_db")
@@ -21,6 +24,6 @@ def create_users():
 
 if __name__ == "__main__":
     app.run(
-        host="localhost",
+        host="0.0.0.0",
         debug=True
     )
