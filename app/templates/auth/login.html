@@ -1,24 +1,32 @@
 {% extends 'base.html' %}
+{% from "macro/formhelpers.html" import render_field %}
 {% block title %}
     Login
 {% endblock %}
 {% block body %}
     <h1>Login as:</h1>
-    {% if error %}
-        <div class="alert alert-danger" role="alert">
-            {{ error }}
-        </div>
+    {% if errors %}
+        {% for error in errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ errors }}
+            </div>
+        {% endfor %}
     {% endif %}
-    <form method="post" action="{{ url_for('auth.login') }}">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="text" name="email" class="form-control" id="email">
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="password">
-        </div>
-        <button type="submit" class="btn btn-primary mb-3">Login</button>
+    <form method="POST">
+        {{ form.csrf_token }}
+        {% for field in ["email", "password"] %}
+            {{ render_field(form[field]) }}
+        {% endfor %}
+        {{ form.submit(class="btn btn-primary mb-3") }}
+        {#        <div class="mb-3">#}
+        {#            <label for="email" class="form-label">Email</label>#}
+        {#            <input type="text" name="email" class="form-control" id="email">#}
+        {#        </div>#}
+        {#        <div class="mb-3">#}
+        {#            <label for="password" class="form-label">Password</label>#}
+        {#            <input type="password" name="password" class="form-control" id="password">#}
+        {#        </div>#}
+        {#        <button type="submit" class="btn btn-primary mb-3">Login</button>#}
     </form>
 {% endblock %}
 

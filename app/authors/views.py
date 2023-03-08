@@ -33,7 +33,6 @@ def register():
         return redirect(url_for('authors.profile', pk=current_user.id))
 
     form = RegisterForm(request.form)
-    errors = []
     if request.method == 'POST' and form.validate_on_submit():
         if Author.query.filter_by(email=form.email.data).count():
             form.email.errors.append("Email is not unique")
@@ -46,4 +45,4 @@ def register():
         db.session.commit()
         login_user(author)
 
-    return render_template("authors/register.html", form=form, errors=errors)
+    return render_template("authors/register.html", form=form)
