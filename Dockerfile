@@ -21,7 +21,9 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["flask", "init_db"]
-CMD ["flask", "create_users"]
+CMD ["flask init_db"]
+CMD ["flask create_users"]
+CMD ["flask", "db init"]
+CMD ["flask", "db migrate -m \"create models\""]
 CMD ["python", "wsgi.py"]
 
