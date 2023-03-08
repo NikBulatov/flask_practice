@@ -1,5 +1,7 @@
 from flask import render_template, request, redirect, url_for, Blueprint
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
+from werkzeug.security import check_password_hash
+
 from app.models import Author
 
 __all__ = ['auth']
@@ -12,20 +14,23 @@ auth = Blueprint(name="auth",
 @auth.route("/login", methods=["POST", "GET"], endpoint="login")
 def login():
     if request.method == "GET":
-        return render_template("auth/login.html")
+        if current_user.is_authenticated:
+            return redirect(url_for('authors.profile', pk=current_user.id))
 
-    username = request.form.get("username")
-    if not username:
-        return render_template("auth/login.html", error="Username not passed")
+        return render_template('auth/login.html')
 
-    user = Author.query.filter_by(username=username).one_or_none()
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get('password')
 
-    if not user:
-        render_template("auth/login.html", error=f"no user {username!r}")
+        user = Author.query.filter_by(email=email).one_or_none()
 
-    login_user(user)
+        if not user or not check_password_hash(user.password, password):
+            render_template("auth/login.html",
+                            error=f"Check your login details")
 
-    return redirect(url_for("authors.profile", pk=user.id))
+        login_user(user)
+        return redirect(url_for("authors.profile", pk=user.id))
 
 
 @auth.route("/logout/", endpoint="logout")

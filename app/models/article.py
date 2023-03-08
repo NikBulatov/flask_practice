@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Text
 from sqlalchemy.orm import relationship
-from app.db import db
+from app.extensions import db
 
 
 class Article(db.Model):
