@@ -6,4 +6,4 @@ from app.extensions import db
 class Article(db.Model):
     title = Column(String(255))
     text = Column(Text())
-    authors = relationship('Author')  # 1:N
+    authors = relationship('User')  # 1:N

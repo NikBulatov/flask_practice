@@ -3,8 +3,8 @@ from app import commands
 from app.extensions import migrate, login_manager, db
 from app.articles.views import articles
 from app.auth.views import auth
-from app.authors.views import authors
-from app.models import Author
+from app.users.views import users
+from app.models import User
 from config import DevelopmentConfig
 
 
@@ -20,7 +20,7 @@ def create_app() -> Flask:
 
 def register_blueprints(app: Flask) -> None:
     app.register_blueprint(articles)
-    app.register_blueprint(authors)
+    app.register_blueprint(users)
     app.register_blueprint(auth)
 
 
@@ -33,7 +33,7 @@ def register_extensions(app: Flask) -> None:
 
     @login_manager.user_loader
     def load_user(user_id):
-        return Author.query.get(int(user_id))
+        return User.query.get(int(user_id))
 
     @login_manager.unauthorized_handler
     def unauthorized():

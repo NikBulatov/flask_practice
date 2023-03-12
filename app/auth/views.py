@@ -3,7 +3,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import check_password_hash
 
 from app.forms.auth import LoginForm
-from app.models import Author
+from app.models import User
 
 __all__ = ['auth']
 
@@ -18,27 +18,27 @@ def login():
 
     if request.method == "GET":
         if current_user.is_authenticated:
-            return redirect(url_for('authors.profile', pk=current_user.id))
+            return redirect(url_for('users.profile', pk=current_user.id))
         return render_template('auth/login.html', form=form)
 
     if request.method == "POST" and form.validate_on_submit():
         email = request.form.get("email")
         password = request.form.get('password')
 
-        author = Author.query.filter_by(email=email).one_or_none()
+        user = User.query.filter_by(email=email).one_or_none()
 
-        if not author or not check_password_hash(author.password, password):
+        if not user or not check_password_hash(user.password, password):
             form.email.errors.append("Check your email")
             form.password.errors.append("Check your password")
             render_template("auth/login.html", form=form,
                             error=f"Check your login details")
 
-        login_user(author)
-        return redirect(url_for("authors.profile", pk=author.id))
+        login_user(user)
+        return redirect(url_for("users.profile", pk=user.id))
 
 
 @auth.route("/logout/", endpoint="logout")
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("authors.get_list"))
+    return redirect(url_for("users.get_list"))

@@ -3,7 +3,7 @@ from app.extensions import db
 from flask_login import UserMixin
 
 
-class Author(db.Model, UserMixin):
+class User(db.Model, UserMixin):
     id = Column(Integer, primary_key=True)
     first_name = Column(String(80), nullable=False)
     last_name = Column(String(80), nullable=False)
