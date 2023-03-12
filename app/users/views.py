@@ -12,7 +12,7 @@ users = Blueprint(name="users",
                   url_prefix="/users")
 
 
-@users.route("/")
+@users.route("/", endpoint="list")
 def get_list():
     user_items = User.query.all()
     return render_template("users/list.html", users=user_items)

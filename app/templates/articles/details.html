@@ -7,7 +7,7 @@
     <h1>"{{ article.title }}"</h1>
     <h4>Authors:</h4>
     {% for author in article.authors %}
-        <h5>{{ author }}</h5>
+        <h5>{{ author.last_name | title }} {{ author.first_name | title }}</h5>
     {% endfor %}
     <p>{{ article.description }}</p>
 {% endblock %}

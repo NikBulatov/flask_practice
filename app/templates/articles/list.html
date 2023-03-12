@@ -5,40 +5,44 @@
 {% endblock %}
 {% block body %}
     <h1>Articles</h1>
-    <div id="carouselExampleCaptions" class="carousel slide">
-        <div class="carousel-indicators">
-            {% for id in articles.keys() %}
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ id | int - 1 }}"
-                        {# TODO carousel active class #}
-                        {% if loop.index <= 1 %}class="active" aria-current="true"{% endif %}
-                        aria-label="Slide {{ id }}"></button>
-            {% endfor %}
+    {% if articles %}
+        <div id="carouselExampleCaptions" class="carousel slide">
+            <div class="carousel-indicators">
+                {% for article in articles %}
+                    <button type="button" data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide-to="{{ article.id | int - 1 }}"
+                            {# TODO carousel active class #}
+                            {% if loop.index <= 1 %}class="active" aria-current="true"{% endif %}
+                            aria-label="Slide {{ article.id }}"></button>
+                {% endfor %}
+            </div>
+            <div class="carousel-inner">
+                {% for article in articles %}
+                    <div class="carousel-item active">
+                        <img src="{{ url_for('static', filename=filename_path(article_id)) }}"
+                             class="d-block w-100"
+                             alt="{{ article.title | title }}"
+                             width="700" height="600">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5><a href="{{ url_for('articles.details', pk=article.id) }}"
+                                   class="text-decoration-none text-light">
+                                {{ article.title | title }}
+                            </a></h5></div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <div class="carousel-inner">
-            {% for article_id in articles.keys() %}
-                <div class="carousel-item active">
-                    <img src="{{ url_for('static', filename=filename_path(article_id)) }}"
-                         class="d-block w-100"
-                         alt="{{ articles[article_id].title }}"
-                         width="700" height="600">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5><a href="{{ url_for('articles.get_item', pk=article_id) }}"
-                               class="text-decoration-none text-light">
-                            {{ articles[article_id].title }}
-                        </a></h5></div>
-                </div>
-            {% endfor %}
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-                data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-                data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-
+    {% else %}
+        <h3>No authors yet</h3>
+    {% endif %}
 {% endblock %}

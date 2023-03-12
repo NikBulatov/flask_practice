@@ -1,25 +1,22 @@
 from flask import Blueprint, render_template
 from werkzeug.exceptions import NotFound
-import json
+
+from app.models import Article
 
 articles = Blueprint(name="articles",
                      import_name=__name__,
                      url_prefix="/articles")
 
 
-@articles.route("/")
+@articles.route("/", endpoint="list")
 def get_list():
-    with open("article_data.json", "r", encoding="utf-8") as f:
-        articles = json.load(f)
-        return render_template("articles/list.html", articles=articles)
+    article_items = Article.query.all()
+    return render_template("articles/list.html", articles=article_items)
 
 
-@articles.route("/<int:pk>")
+@articles.route("/<int:pk>", endpoint="details")
 def get_item(pk: int):
-    try:
-        with open("article_data.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-            article = data[str(pk)]
-    except KeyError:
+    article = Article.query.filter_by(id=pk).one_or_none()
+    if not article:
         raise NotFound(f"Article with ID={pk} not found")
     return render_template("articles/details.html", article=article)
