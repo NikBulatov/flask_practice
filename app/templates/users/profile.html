@@ -5,5 +5,15 @@
 {% endblock %}
 {% block body %}
     <h1>User name: "{{ user.first_name | title }} {{ user.last_name | title }}"</h1>
+    <h3>Author of articles:</h3>
+    {% for article in user.author.articles %}
+        <ul>
+            <li>
+                <a href="{{ url_for('articles.details', pk=article.id) }}">
+                    {{ article.title }}
+                </a>
+            </li>
+        </ul>
+    {% endfor %}
 {% endblock %}
 

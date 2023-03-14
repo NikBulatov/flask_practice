@@ -11,7 +11,9 @@
                 <ul>
                     {% for author in authors %}
                         <li>
-                            №{{ author.id }} ({{ author.user.last_name | title }} {{ author.user.first_name | title }})
+                            <a href="{{ url_for('users.profile', pk=author.user.id) }}">
+                                {{ author.user.first_name }} {{ author.user.last_name }} ({{ author.id }})
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
