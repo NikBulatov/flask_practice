@@ -44,4 +44,3 @@ def register_extensions(app: Flask) -> None:
 
 def register_commands(app: Flask):
     app.cli.add_command(commands.create_users)
-    app.cli.add_command(commands.init_db)

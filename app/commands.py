@@ -19,8 +19,3 @@ def create_users():
                             last_name="jamesov"))
 
         db.session.commit()
-
-
-@click.command("init_db")
-def init_db():
-    db.create_all()
