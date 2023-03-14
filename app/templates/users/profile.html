@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block title %}
-    User {{ author }}
+    {{ user.last_name | title }} {{ user.first_name | title }}
 {% endblock %}
 {% block body %}
     <h1>User name: "{{ user.first_name | title }} {{ user.last_name | title }}"</h1>
     {% if user.author.articles %}
-    <h3>Author of articles:</h3>
+        <h3>Author of articles:</h3>
         {% for article in user.author.articles %}
             <ul>
                 <li>
@@ -17,7 +17,7 @@
             </ul>
         {% endfor %}
     {% else %}
-    <h3>Author has not written any article</h3>
+        <h3>Author has not written any article</h3>
     {% endif %}
 {% endblock %}
 
