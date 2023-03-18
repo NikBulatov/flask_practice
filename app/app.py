@@ -1,10 +1,11 @@
 from flask import Flask, redirect, url_for
 from app import commands
-from app.extensions import migrate, login_manager, db
+from app.extensions import migrate, login_manager, db, csrf
 from app.models import User
-from app.articles.views import articles
-from app.auth.views import auth
-from app.users.views import users
+from app.views import admin
+from app.views import auth
+from app.views import articles
+from app.views import users
 from config import DevelopmentConfig
 
 
@@ -27,6 +28,8 @@ def register_blueprints(app: Flask) -> None:
 def register_extensions(app: Flask) -> None:
     db.init_app(app)
     migrate.init_app(app, db, compare_type=True)
+    admin.init_app(app)
+    csrf.init_app(app)
 
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
