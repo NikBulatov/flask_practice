@@ -7,14 +7,19 @@
     <div class="row">
         <div class="col">
             <h1>Users:</h1>
-            {% for user in users %}
+            {% if users %}
                 <ul>
-                    <li>
-                        <a href="{{ url_for('users.profile', pk=user.id) }}">{{ user.first_name }} {{ user.last_name }}</a>
-                    </li>
+                    {% for user in users %}
+                        <li>
+                            <a href="{{ url_for('users.profile', pk=user.id) }}">
+                                {{ user.first_name }} {{ user.last_name }}
+                            </a>
+                        </li>
+                    {% endfor %}
                 </ul>
-            {% endfor %}
+            {% else %}
+                <h3>No users yet</h3>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
-

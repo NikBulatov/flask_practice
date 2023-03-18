@@ -5,7 +5,6 @@ from app.models import User
 from app.articles.views import articles
 from app.auth.views import auth
 from app.users.views import users
-from app.authors.views import authors
 from config import DevelopmentConfig
 
 
@@ -22,7 +21,6 @@ def create_app() -> Flask:
 def register_blueprints(app: Flask) -> None:
     app.register_blueprint(users)
     app.register_blueprint(auth)
-    app.register_blueprint(authors)
     app.register_blueprint(articles)
 
 
@@ -44,3 +42,4 @@ def register_extensions(app: Flask) -> None:
 
 def register_commands(app: Flask):
     app.cli.add_command(commands.create_users)
+    app.cli.add_command(commands.create_tags)

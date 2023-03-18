@@ -1,12 +1,16 @@
-from flask import Blueprint, render_template, request, current_app, url_for, \
-    redirect
+from flask import (Blueprint,
+                   render_template,
+                   request, current_app,
+                   url_for,
+                   redirect)
 from flask_login import current_user, login_required
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import joinedload
 from werkzeug.exceptions import NotFound
 
 from app.extensions import db
-from app.forms.article import CreateArticleForm
-from app.models import Article, Author
+from app.forms import CreateArticleForm
+from app.models import Article, Author, Tag
 
 articles = Blueprint(name="articles",
                      import_name=__name__,
@@ -21,7 +25,8 @@ def get_list():
 
 @articles.route("/<int:pk>", endpoint="details")
 def get_item(pk: int):
-    article = Article.query.filter_by(id=pk).one_or_none()
+    article = Article.query.filter_by(id=pk).options(
+        joinedload(Article.tags)).one_or_none()
     if not article:
         raise NotFound(f"Article with ID={pk} not found")
     return render_template("articles/details.html", article=article)
@@ -32,10 +37,15 @@ def get_item(pk: int):
 def create_article():
     error = None
     form = CreateArticleForm(request.form)
+    form.tags.choices = [(tag.id, tag.name) for tag in
+                         Tag.query.order_by("name")]
 
     if request.method == "POST" and form.validate_on_submit():
         article = Article(title=form.title.data.strip(), body=form.body.data)
-        db.session.add(article)
+        if form.tags.data:
+            selected_tags = Tag.query.filter(Tag.id.in_(form.tags.data))
+            for tag in selected_tags:
+                article.tags.append(tag)
 
         if current_user.author:
             article.author = current_user.author
@@ -46,6 +56,7 @@ def create_article():
             article.author = current_user.author
 
         try:
+            db.session.add(article)
             db.session.commit()
         except IntegrityError:
             error = "Could not create a new article!"

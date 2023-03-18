@@ -1,8 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint
 from flask_login import login_user, login_required, logout_user, current_user
-from werkzeug.security import check_password_hash
-
-from app.forms.auth import LoginForm
+from app.forms import LoginForm
 from app.models import User
 
 __all__ = ['auth']
@@ -27,7 +25,7 @@ def login():
 
         user = User.query.filter_by(email=email).one_or_none()
 
-        if not user or not check_password_hash(user.password, password):
+        if not user or not user.check_password(password):
             form.email.errors.append("Check your email")
             form.password.errors.append("Check your password")
             render_template("auth/login.html", form=form,

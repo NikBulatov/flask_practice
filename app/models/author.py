@@ -10,6 +10,3 @@ class Author(db.Model):
 
     user = relationship("User", back_populates="author")
     articles = relationship("Article", back_populates="author")
-
-    def __repr__(self):
-        return f"<User #{self.id} {self.first_name!r} {self.last_name!r}>"

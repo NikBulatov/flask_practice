@@ -2,9 +2,8 @@ from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import login_required, current_user, login_user
 from werkzeug.exceptions import NotFound
 from werkzeug.security import generate_password_hash
-
 from app.extensions import db
-from app.forms.user import RegisterForm
+from app.forms import RegisterForm
 from app.models import User
 
 users = Blueprint(name="users",
@@ -37,6 +36,7 @@ def register():
         if User.query.filter_by(email=form.email.data).count():
             form.email.errors.append("Email is not unique")
             return render_template("users/register.html", form=form)
+
         user = User(email=form.email.data,
                     first_name=form.first_name.data,
                     last_name=form.last_name.data,
