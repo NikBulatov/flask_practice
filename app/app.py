@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for
 from app import commands
+from app.api import api
 from app.extensions import migrate, login_manager, db, csrf
 from app.models import User
 from app.views import admin
@@ -30,6 +31,7 @@ def register_extensions(app: Flask) -> None:
     migrate.init_app(app, db, compare_type=True)
     admin.init_app(app)
     csrf.init_app(app)
+    api.init_app(app)
 
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
