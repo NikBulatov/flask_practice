@@ -2,11 +2,6 @@ from flask_admin import AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
 from flask import redirect, url_for
-from flask_admin import Admin
-from app import models
-from app.extensions import db
-
-__all__ = ["admin"]
 
 
 class CustomAdminView(ModelView):
@@ -28,7 +23,6 @@ class CustomAdminView(ModelView):
 
 
 class CustomAdminIndexView(AdminIndexView):
-
     @expose()
     def index(self):
         if not (current_user.is_authenticated and current_user.is_staff):
@@ -58,13 +52,3 @@ class UserAdminView(CustomAdminView):
     can_create = False
     can_view_details = False
     column_editable_list = ('first_name', 'last_name', 'is_staff')
-
-
-admin = Admin(
-    index_view=CustomAdminIndexView(),
-    name='Blog Admin Panel',
-    template_mode='bootstrap4',
-)
-admin.add_view(UserAdminView(models.User, db.session))
-admin.add_view(ArticleAdminView(models.Article, db.session))
-admin.add_view(TagAdminView(models.Tag, db.session))

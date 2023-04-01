@@ -1,18 +1,15 @@
-from flask import Flask, redirect, url_for
+from combojsonapi.event import EventPlugin
+from combojsonapi.permission import PermissionPlugin
+from combojsonapi.spec import ApiSpecPlugin
+from flask import Flask
 from app import commands
-from app.api import api
-from app.extensions import migrate, login_manager, db, csrf
+from app.extensions import db, login_manager, migrate, csrf, admin, api
 from app.models import User
-from app.views import admin
-from app.views import auth
-from app.views import articles
-from app.views import users
-from config import DevelopmentConfig
 
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    app.config.from_object(DevelopmentConfig)
+    app.config.from_object('app.config')
 
     register_extensions(app)
     register_blueprints(app)
@@ -20,17 +17,24 @@ def create_app() -> Flask:
     return app
 
 
-def register_blueprints(app: Flask) -> None:
-    app.register_blueprint(users)
-    app.register_blueprint(auth)
-    app.register_blueprint(articles)
-
-
-def register_extensions(app: Flask) -> None:
+def register_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db, compare_type=True)
-    admin.init_app(app)
     csrf.init_app(app)
+    admin.init_app(app)
+    api.plugins = [
+        EventPlugin(),
+        PermissionPlugin(),
+        ApiSpecPlugin(
+            app=app,
+            tags={
+                'Tag': 'Tag API',
+                'User': 'User API',
+                'Author': 'Author API',
+                'Article': 'Article API',
+            }
+        ),
+    ]
     api.init_app(app)
 
     login_manager.login_view = 'auth.login'
@@ -40,11 +44,24 @@ def register_extensions(app: Flask) -> None:
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    @login_manager.unauthorized_handler
-    def unauthorized():
-        return redirect(url_for("auth.login"))
+
+def register_blueprints(app: Flask):
+    from app.auth.views import auth
+    from app.user.views import user
+    from app.author.views import author
+    from app.articles.views import article
+    from app.api.views import api_blueprint
+    from app import admin
+
+    app.register_blueprint(user)
+    app.register_blueprint(auth)
+    app.register_blueprint(author)
+    app.register_blueprint(article)
+    app.register_blueprint(api_blueprint)
+
+    admin.register_views()
 
 
 def register_commands(app: Flask):
-    app.cli.add_command(commands.create_users)
-    app.cli.add_command(commands.create_tags)
+    app.cli.add_command(commands.create_init_user)
+    app.cli.add_command(commands.create_init_tags)

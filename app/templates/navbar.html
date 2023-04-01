@@ -7,23 +7,31 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                {% for item in ['users', 'articles'] %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.user_list') }}">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('author.author_list') }}">Authors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('article.article_list') }}">Articles</a>
+                </li>
+                {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for(item + '.list') }}">{{ item | title }}</a>
+                        <a class="nav-link" href="{{ url_for('article.create_article_form') }}">Create article</a>
                     </li>
-                {% endfor %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout ({{ current_user.email }})</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('user.register') }}">Registration</a>
+                    </li>
+                {% endif %}
             </ul>
-            {% if current_user.is_authenticated %}
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="{{ url_for('articles.create') }}">Create article</a>
-                    <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
-                </div>
-            {% else %}
-                <div class="navbar-nav ms-auto">
-                    <a href="{{ url_for('auth.login') }}"
-                       class="nav-link {% if request.endpoint == 'auth.login' -%}active{%- endif %}">Login</a>
-                </div>
-            {% endif %}
         </div>
     </div>
 </nav>

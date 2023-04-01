@@ -2,14 +2,14 @@ version: "3"
 
 services:
   pg:
-    image: postgres:latest
+    image: postgres:12.7-alpine
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - /dbs/flaskProject/pgdata_dev:/var/lib/postgresql/data/pgdata
+      - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
   app:
@@ -20,9 +20,7 @@ services:
       SQLALCHEMY_DATABASE_URI: ${SQLALCHEMY_DATABASE_URI_DOCKER}
       CONFIG_NAME: DevelopmentConfig
       SECRET_KEY: ${SECRET_KEY}
-    volumes:
-      - ./app:/app/app
     ports:
-      - "5000:5000"
+      - "8080:5000"
     depends_on:
       - pg

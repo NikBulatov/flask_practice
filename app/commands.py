@@ -1,32 +1,30 @@
 import click
 from werkzeug.security import generate_password_hash
+
 from app.extensions import db
 
 
-@click.command("create_users")
-def create_users():
-    from wsgi import app
+@click.command('create-init-user')
+def create_init_user():
     from app.models import User
-
-    with app.app_context():
-        db.session.add(User(email="admin@ex.com", is_staff=True,
-                            password=generate_password_hash("admin"),
-                            first_name="admin",
-                            last_name="adminov"))
-        db.session.add(User(email="james@ex.com",
-                            password=generate_password_hash("james"),
-                            first_name="james",
-                            last_name="jamesov"))
-
-        db.session.commit()
-
-
-@click.command("create_tags")
-def create_tags():
     from wsgi import app
-    from app.models import Tag
 
     with app.app_context():
-        for name in ("art", "science", "culture", "photography"):
-            db.session.add(Tag(name=name))
+        db.session.add(
+            User(email='name@example.com',
+                 password=generate_password_hash('test123'))
+        )
         db.session.commit()
+
+
+@click.command('create-init-tags')
+def create_init_tags():
+    from app.models import Tag
+    from wsgi import app
+
+    with app.app_context():
+        tags = ('flask', 'django', 'python', 'gb', 'sqlite')
+        for item in tags:
+            db.session.add(Tag(name=item))
+        db.session.commit()
+    click.echo(f'Created tags: {", ".join(tags)}')
