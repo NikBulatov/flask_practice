@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 import requests
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
@@ -15,7 +15,7 @@ article = Blueprint("article", __name__,
 
 @article.route('/', methods=["GET"])
 def article_list():
-    articles: list[Article] = Article.query.all()
+    articles: List[Article] = Article.query.all()
     # call RPC method
     count_articles: Dict = requests.get(
         "http://127.0.0.1:5000/api/articles/event_get_count/").json()
