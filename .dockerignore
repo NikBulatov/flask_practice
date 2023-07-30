@@ -77,11 +77,8 @@ fabric.properties
 .Python
 [Bb]in
 [Ii]nclude
-[Ll]ib
 [Ll]ib64
 [Ll]ocal
-[Ss]cripts
-pyvenv.cfg
 .venv
 pip-selfcheck.json
 
@@ -95,8 +92,6 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-.Python
-build/
 develop-eggs/
 dist/
 downloads/
@@ -140,9 +135,6 @@ coverage.xml
 cover/
 
 # Translations
-*.mo
-*.pot
-
 # Django stuff:
 *.log
 local_settings.py
@@ -293,3 +285,7 @@ $RECYCLE.BIN/
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
 
+# Migrations
+/migrations
+
+docker-compose.yaml

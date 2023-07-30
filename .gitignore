@@ -383,5 +383,6 @@ $RECYCLE.BIN/
 # SQLite database
 *.sqlite
 *.db
+/migrations
 
 # Configuration
