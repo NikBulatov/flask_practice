@@ -9,7 +9,7 @@ from app.models import User
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    app.config.from_object('app.config')
+    app.config.from_object("app.config")
 
     register_extensions(app)
     register_blueprints(app)
@@ -28,16 +28,16 @@ def register_extensions(app):
         ApiSpecPlugin(
             app=app,
             tags={
-                'Tag': 'Tag API',
-                'User': 'User API',
-                'Author': 'Author API',
-                'Article': 'Article API',
-            }
+                "Tag": "Tag API",
+                "User": "User API",
+                "Author": "Author API",
+                "Article": "Article API",
+            },
         ),
     ]
     api.init_app(app)
 
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = "auth.login"
     login_manager.init_app(app)
 
     @login_manager.user_loader

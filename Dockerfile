@@ -1,4 +1,4 @@
-FROM python:3.10.10-buster
+FROM python:3.8
 
 WORKDIR /app
 
@@ -8,6 +8,6 @@ RUN pip install --no-cache --user -r requirements.txt
 
 COPY . .
 
-EXPOSE 5000
+CMD ["bash", "db_init.sh"]
 
-CMD ["python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+EXPOSE 5000
